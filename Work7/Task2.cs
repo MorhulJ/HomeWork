@@ -1,37 +1,38 @@
-﻿public interface IOutput2
+﻿public class PriorityQueue<T>
 {
-    public void ShowEven();
-    public void ShowOdd();
-}
+    private List<T> items = new List<T>();
+    private List<int> priorities = new List<int>();
 
-public class MyArray2 : IOutput2
-{
-    private int[] Data;
-
-    public MyArray2(int[] data)
+    public void Enqueue(T item, int priority)
     {
-        Data = data;
+        items.Add(item);
+        priorities.Add(priority);
     }
 
-    public void ShowEven()
+    public T Dequeue()
     {
-        foreach (var item in Data)
+        if (items.Count == 0)
+            throw new Exception("Queue is empty");
+
+        int minIndex = 0;
+
+        for (int i = 1; i < priorities.Count; i++)
         {
-            if (item % 2 == 0)
+            if (priorities[i] < priorities[minIndex])
             {
-                Console.Write(item + " ");
+                minIndex = i;
             }
         }
+
+        T result = items[minIndex];
+        items.RemoveAt(minIndex);
+        priorities.RemoveAt(minIndex);
+
+        return result;
     }
 
-    public void ShowOdd()
+    public bool IsEmpty()
     {
-        foreach (var item in Data)
-        {
-            if (item % 2 != 0)
-            {
-                Console.Write(item + " ");
-            }
-        }
+        return items.Count == 0;
     }
 }

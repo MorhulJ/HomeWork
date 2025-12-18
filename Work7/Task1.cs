@@ -1,39 +1,7 @@
-﻿public interface ICalc
+﻿public class Task1
 {
-    public int Less(int valueToCompare);
-    public int Greater(int valueToCompare);
-}
-
-public class MyArray1 : ICalc
-{
-    private int[] Data;
-
-    public MyArray1(int[] data)
+    public static void Swap<T>(ref T a, ref T b)
     {
-        Data = data;
-    }
-
-    public int Less(int valueToCompare)
-    {
-        int counter = 0;
-        
-        foreach (var item in Data)
-        {
-            if (item < valueToCompare)
-                counter++;
-        }
-        return counter;
-    }
-
-    public int Greater(int valueToCompare)
-    {
-        int counter = 0;
-        
-        foreach (var item in Data)
-        {
-            if (item > valueToCompare)
-                counter++;
-        }
-        return counter;
+        (a, b) = (b, a);
     }
 }

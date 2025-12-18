@@ -1,42 +1,82 @@
-﻿public interface IRemouteControle
+﻿public class SinglyLinkedList<T>
 {
-    public void TurnOn();
-    public void TurnOff();
-    public void SetChannel(int channel);
-}
+    private Node head;
+    private int count;
 
-public class TV :  IRemouteControle
-{
-    public void TurnOn()
+    private class Node
     {
-        Console.WriteLine("TV On");
+        public T Data;
+        public Node Next;
+
+        public Node(T data)
+        {
+            Data = data;
+            Next = null;
+        }
     }
 
-    public void TurnOff()
+    public int Count => count;
+    public bool IsEmpty => count == 0;
+
+    public SinglyLinkedList()
     {
-        Console.WriteLine("TV Off");
+        head = null;
+        count = 0;
     }
 
-    public void SetChannel(int channel)
+    public void AddFirst(T item)
     {
-        Console.WriteLine($"TV Channel: {channel}");
-    }
-}
-
-public class Radio :  IRemouteControle
-{
-    public void TurnOn()
-    {
-        Console.WriteLine("Radio On");
+        Node newNode = new Node(item);
+        newNode.Next = head;
+        head = newNode;
+        count++;
     }
 
-    public void TurnOff()
+    public void AddLast(T item)
     {
-        Console.WriteLine("Radio Off");
+        Node newNode = new Node(item);
+
+        if (IsEmpty)
+        {
+            head = newNode;
+        }
+        else
+        {
+            Node current = head;
+            while (current.Next != null)
+            {
+                current = current.Next;
+            }
+            current.Next = newNode;
+        }
+
+        count++;
     }
 
-    public void SetChannel(int channel)
+    public T RemoveFirst()
     {
-        Console.WriteLine($"Radio Channel: {channel}");
+        if (IsEmpty)
+            throw new Exception("List is empty");
+
+        T value = head.Data;
+        head = head.Next;
+        count--;
+
+        return value;
+    }
+
+    public bool Contains(T item)
+    {
+        Node current = head;
+
+        while (current != null)
+        {
+            if (current.Data.Equals(item))
+                return true;
+
+            current = current.Next;
+        }
+
+        return false;
     }
 }
